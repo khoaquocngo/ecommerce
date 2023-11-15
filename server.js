@@ -1,14 +1,14 @@
 const app = require("./src/app");
+const config = require('./src/configs/config.container')
 
-const PORT = 6969;
 
-const server = app.listen(PORT, () => {
-    console.log(`🚀 server:: connected http://localhost:${PORT}` );
+const server = app.listen(config.port, () => {
+    console.log(`🚀 server:: connected ${config.host}:${config.port}` );
 });
 
 // process.on('SIGINT', () => {
 //     server.close(() => console.log('Shut down::: express server'));
 
 //     // notify when server shutdown or crash
-        // notify.send(...)
+//     // notify.send(...)
 // })

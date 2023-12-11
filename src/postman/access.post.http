@@ -1,0 +1,13 @@
+@url_dev=http://localhost:6969
+
+### signup
+
+POST {{url_dev}}/v1/api/shop/signup
+Content-Type: application/json
+x-api-key: 79977ebc910775f603c0cf5a7c3ca268233fa05c5527dafbe577c48e2a22418338ca444189228400512049120df49680b95dbfc6252a246631f30accb941232e
+
+{
+    "name": "Shop KOPU",
+    "email": "shop10@kopu.com",
+    "password": "abc123"
+}

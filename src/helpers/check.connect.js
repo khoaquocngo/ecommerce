@@ -20,9 +20,8 @@ const checkOverload = () => {
         const memoryUsage = process.memoryUsage().rss;
 
         // log info
-
-        console.log(`ℹ️  mongoDB::: active connections ${numConnection}`);
-        console.log(`ℹ️  mongoDB::: memory usage ${memoryUsage / 1024 / 1024} MB`);
+        // console.log(`ℹ️  mongoDB::: active connections ${numConnection}`);
+        // console.log(`ℹ️  mongoDB::: memory usage ${memoryUsage / 1024 / 1024} MB`);
 
         /*
             admin db

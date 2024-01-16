@@ -3,18 +3,19 @@
 const keyStoreModel = require('../models/keyStore.model');
 
 class KeyStoreService {
-    static createKeyToken = async ({ userId, publicKey }) => {
-        try {
-            const token = await keyStoreModel.create({
-                user: userId,
-                publicKey,
-                privateKey,
-            })
+    static createKeyToken = async ({ userId, publicKey, privateKey, refreshToken }) => {
+        const filter = { user: userId };
+        const update = { 
+            user: userId, 
+            publicKey, 
+            privateKey,
+            refreshToken,
+        };
+        const option = { upsert: true, new: true }
 
-            return token ? token : null;
-        } catch (error) {
-            return error;
-        }
+        const token = await keyStoreModel.findOneAndUpdate(filter, update, option);
+
+        return token ? token.publicKey : null;
     }
 }
 

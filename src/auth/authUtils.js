@@ -23,7 +23,7 @@ const createTokenPair = async ({ payload, publicKey, privateKey }) => {
             refreshToken,
         }
     } catch (error) {
-        
+        console.log('error ~ createTokenPair', error.message)
     }
 }
 

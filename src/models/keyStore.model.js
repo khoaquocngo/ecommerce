@@ -17,13 +17,16 @@ const keyStoreSchema = new Schema({
         require: true,
     },
     privateKey: {
+        type: String,
+    },
+    refreshTokensUsed: {
         type: Array,
         default: [],
     },
     refreshToken: {
-        type: Array,
-        default: [],
-    },
+        type: String,
+        require: true,
+    }
 }, {
     timestamps: true,
     collection: COLLECTION_NAME

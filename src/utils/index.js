@@ -1,9 +1,7 @@
-const _ = require('lodash');
-
-const getInfoData = ({ fields = [], obj = {} }) => {
-    return _.pick(obj, fields);
-}
+const otherUtils = require('./otherUtils');
+const httpStatusCode = require('./httpStatusCode');
 
 module.exports = {
-    getInfoData,
+    ...otherUtils,
+    ...httpStatusCode,
 }

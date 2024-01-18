@@ -17,6 +17,20 @@ class KeyStoreService {
 
         return token ? token.publicKey : null;
     }
+
+    static findByUserId = async (user) => {
+        const shop = await keyStoreModel
+            .findOne({ user })
+            .lean()
+        
+        return shop;
+    }
+
+    static removeKeyById = async (id) => {
+        const removeKey = await keyStoreModel.deleteOne({ _id: id });
+        
+        return removeKey;
+    }
 }
 
 module.exports = KeyStoreService;

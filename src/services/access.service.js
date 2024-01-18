@@ -60,6 +60,11 @@ async function generateToken({ payload, publicKey, privateKey }) {
 
 
 class AccessService {
+    static signOut = async ({ keyStore}) => {
+        const delKey = await KeyStoreService.removeKeyById(keyStore._id);
+        return delKey;
+    }
+
     static signIn = async ({ email, password, refreshToken = null }) => {
         // 1 - Check email in dbs
         const foundShop = await findByEmail({ email });

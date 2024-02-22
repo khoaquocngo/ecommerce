@@ -51,3 +51,4 @@ module.exports = {
     CREATED,
     SuccessResponse,
 }
+

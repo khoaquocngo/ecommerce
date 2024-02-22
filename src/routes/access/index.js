@@ -14,5 +14,7 @@ router.post('/shop/signIn', asyncHandler(accessController.signIn));
 // Authentication
 router.use(authentication);
 router.post('/shop/signOut', asyncHandler(accessController.signOut));
+router.post('/shop/refreshToken', asyncHandler(accessController.refreshToken));
+
 
 module.exports = router;

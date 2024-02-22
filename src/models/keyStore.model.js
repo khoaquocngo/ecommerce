@@ -23,9 +23,9 @@ const keyStoreSchema = new Schema({
         type: Array,
         default: [],
     },
-    refreshToken: {
-        type: String,
-        require: true,
+    refreshTokens: {
+        type: Array,
+        default: [],
     }
 }, {
     timestamps: true,

@@ -4,8 +4,7 @@ const { countConnect } = require('../helpers/check.connect');
 
 const mongoose = require('mongoose');
 
-const db = require('../configs/config.mongodb')
-
+const db = require('../configs/config.mongodb');
 
 function initMongodb() {
     if (1 === 1) {
@@ -18,13 +17,12 @@ function initMongodb() {
             console.log('🌈 mongoDB::: connected successfully!!')
             countConnect()
         })
-        .catch(error => console.log('❌ mongoDB::: connection failed!!'));
+        .catch(error => console.log('❌ mongoDB::: connection failed!!', error));
 }
 
 const getDatabase = {
-    mongodb: initMongodb
-}
-
+    mongodb: initMongodb,
+};
 
 class Database {
     constructor() {
@@ -33,14 +31,13 @@ class Database {
 
     // Connect
     connect(type = 'mongodb') {
-        getDatabase[type]()
+        getDatabase[type]();
     }
 
     static getInstance() {
         if (!Database.instance) {
             Database.instance = new Database();
         }
-        
         return Database.instance;
     }
 }

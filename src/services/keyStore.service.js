@@ -6,14 +6,19 @@ class KeyStoreService {
     static createKeyToken = async ({ userId, publicKey, privateKey, refreshToken }) => {
         const filter = { user: userId };
         const update = { 
-            user: userId, 
-            publicKey, 
-            privateKey,
-            refreshToken,
+            $set: {
+                user: userId, 
+                publicKey, 
+                privateKey,
+            },
+            $push: {
+                refreshTokens: refreshToken,
+            }
         };
         const option = { upsert: true, new: true }
 
         const token = await keyStoreModel.findOneAndUpdate(filter, update, option);
+
 
         return token ? token.publicKey : null;
     }
@@ -30,6 +35,33 @@ class KeyStoreService {
         const removeKey = await keyStoreModel.deleteOne({ _id: id });
         
         return removeKey;
+    }
+
+    static findByRefreshTokenUsed = async (refreshToken) => {
+        const findRefreshToken = await keyStoreModel
+            .findOne({ refreshTokensUsed: refreshToken })
+            .lean()
+        
+        return findRefreshToken;
+    }
+
+    static deleteKeyByUserId = async (userId) => {
+        const keyStore = await keyStoreModel.findOneAndDelete({ user: userId });
+        return keyStore;
+    }
+
+    static updateRefreshTokenUsed = async (userId, refreshToken) => {
+        await keyStoreModel.updateOne(
+            { user: userId },
+            {
+                $addToSet: {
+                    refreshTokensUsed: refreshToken,
+                },
+                $pull: {
+                    refreshTokens: refreshToken,
+                }
+            }
+        )
     }
 }
 

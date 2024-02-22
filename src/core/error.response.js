@@ -1,6 +1,3 @@
-'use strict'
-
-
 const {
     StatusCodes,
     ReasonPhrases,
@@ -11,7 +8,6 @@ class ErrorResponse extends Error {
         super(message);
         this.status = status;
     }
-
 }
 
 class ConflictRequestError extends ErrorResponse {
@@ -38,10 +34,9 @@ class NotFoundError extends ErrorResponse {
     }
 }
 
-
 module.exports = {
     NotFoundError,
     AuthFailureError,
     ConflictRequestError,
     BadRequestError,
-}
+};

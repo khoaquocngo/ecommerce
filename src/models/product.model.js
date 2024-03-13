@@ -1,6 +1,7 @@
 'use strict'
 
 const { Schema, model } = require('mongoose');
+const slugify = require('slugify');
 
 const DOCUMENT_NAME = 'Product';
 const COLLECTION_NAME = 'Products';
@@ -19,22 +20,23 @@ const productSchema = new Schema({
     productName: {
         type: String,
         require: true,
-    },
+    }, // High KOPU
     productThumb: {
         type: String,
         require: true,   
     },
     productDescription: String,
+    productSlug: String, // kopu-cao-cap
     productPrice: {
         type: Number,
         require: true,
-    },
+    }, // hight-kopu
     productQuantity: {
         type: Number,
         require: true,
     },
     productType: {
-        type: Number,
+        type: String,
         require: true,
         enum: ['Electronics', 'Clothing', 'Furniture'],
     },
@@ -45,11 +47,40 @@ const productSchema = new Schema({
     productAttributes: {
         type: Schema.Types.Mixed,
         required: true,
+    },
+
+    // more ...
+    productRatingsAverage: {
+        type: Number,
+        default: 4.5,
+        min: [1, 'Rating must be above 1.0'],
+        max: [5, 'Ratibg mus be above 2.0'],
+        set: (vale) => Math.round(vale * 10) / 10
+    },
+    productVariations: {
+        type: Array,
+        default: [],
+    },
+    isDraft: {
+        type: Boolean,
+        default: true,
+        indexes: true,
+        select: false,        
+    },
+    isPublished: {
+        type: Boolean,
+        default: false,
+        indexes: true,
+        select: false,        
     }
 }, {
     timestamps: true,
     collection: COLLECTION_NAME
 });
+
+// create Index
+productSchema.index({productName: 'text',  productDescription: 'text'});
+
 
 // define product type = clothing
 const clothingSchema = new Schema({
@@ -66,6 +97,13 @@ const clothingSchema = new Schema({
     timestamps: true,
     collection: CLOTHING_COLLECTION_NAME
 })
+
+// Document middleware: run before .save() and create()
+productSchema.pre('save', function (next) {
+    this.productSlug = slugify(this.productName, { lower: true });
+    next();
+})
+
 
 // define product type = electronics
 const electronicSchema = new Schema({
@@ -103,5 +141,5 @@ module.exports = {
     product: model(DOCUMENT_NAME, productSchema),
     electronic: model(ELECTRONIC_DOCUMENT_NAME, electronicSchema),
     clothing: model(CLOTHING_DOCUMENT_NAME, clothingSchema),
-    furniture: model(FURNITURE_COLLECTION_NAME, furnitureSchema),
+    furniture: model(FURNITURE_DOCUMENT_NAME, furnitureSchema),
 };
